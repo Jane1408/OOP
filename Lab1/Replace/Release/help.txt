@@ -1,0 +1,1 @@
+replace.exe <inputFile> <outputFile> <searchString> <replaceString>

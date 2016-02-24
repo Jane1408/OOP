@@ -1,0 +1,1 @@
+Error. File CheckBadInput.txt is not found.

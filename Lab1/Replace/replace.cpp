@@ -4,58 +4,49 @@
 #include "stdafx.h"
 #include <io.h>
 #include <fstream>
+#include <iostream>
 #include <string>
-#include <sys/stat.h>
 
 
-const int64_t MAX_SIZE_OF_FILE = 17179869184;
+bool IsPathExists(const char * input)
+{
+	if (_access(input, 0) == -1)
+	{
+		std::cout << "Error. File " << std::string(input) << " is not found." << std::endl;
+		return false;
+	}
+	return true;
+}
 
-bool isArgumentsCorrect(int argc, char * argv)
+bool CheckArguments(int argc, const char * argv)
 {
 	if ((argc == 5) || (argc == 4))
 	{
-		return true;
+		if (IsPathExists(argv))
+			return true;
+		else
+			return false;
 	}
 	else if ((argc == 2) && (std::string(argv) == "help"))
 	{
-		printf("replace.exe <inputFile> <outputFile> <searchString> <replaceString>");
+		std::cout << "replace.exe <inputFile> <outputFile> <searchString> <replaceString>" << std::endl;
 		return false;
 	}
 
 	else if (argc > 5)
 	{
-		printf("Error. The number of arguments exceeds the limit. You need 4 or 5 arguments.");
+		std::cout << "Error. The number of arguments exceeds the limit. Use 'help' for more information." << std::endl;
 		return false;
 	}
 
 	else
 	{
-		printf("Error. Not enough arguments. You need 4 or 5 arguments.");
+		std::cout << "Error. Not enough arguments. Use 'help' for more information." << std::endl;
 		return false;
 	}
 }
 
-bool isFileSizeCorrect(char * input)
-{
-	if (_access(input, 0) == -1)
-	{ 
-		printf("Error. File %s is not found.", input);
-		return false;
-	}
-	struct stat fi;
-	stat(input, &fi);
-	if (int(fi.st_size) < MAX_SIZE_OF_FILE)
-	{
-		return true;
-	}
-	else
-	{
-		printf("Error. Invalid size of file.");
-		return false;
-	}
-}
-
-void OnlyRewrite(char * input, char * output)
+void OnlyRewrite(const char * input, const char * output)
 {
 	std::ifstream inputFile(input);
 	std::ofstream outputFile(output);
@@ -71,19 +62,17 @@ void OnlyRewrite(char * input, char * output)
 	outputFile.close();
 }
 
-void ReplaceAndRewrite(char * input, char * output, char * search, char * replace)
+void ReplaceAndRewrite(const char * input, const char * output, std::string searchString, std::string replaceString)
 {
 
 	std::ifstream inputFile(input);
 	std::ofstream outputFile(output);
 
-	std::string searchString(search);
-	std::string replaceString(replace);
 	std::string line;
 
 	while (std::getline(inputFile, line))
 	{
-		for (int i = 0; i < line.length();)
+		for (size_t i = 0; i < line.length();)
 		{
 			if (line[i] == searchString[0])
 			{
@@ -112,7 +101,7 @@ void ReplaceAndRewrite(char * input, char * output, char * search, char * replac
 
 int main(int argc, char* argv[])
 {
-	if (isArgumentsCorrect(argc, argv[1]) && isFileSizeCorrect(argv[1]))
+	if (CheckArguments(argc, argv[1]))
 	{
 		if (argc == 4) 
 		{
