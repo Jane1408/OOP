@@ -12,7 +12,7 @@ if ERRORLEVEL 1 goto testFailed
 fc.exe out.txt FewArguments.txt
 if ERRORLEVEL 1 goto testFailed
 
-%program% 5 12> out.txt
+%program% 5 84> out.txt
 if ERRORLEVEL 1 goto testFailed
 fc.exe out.txt FewArguments.txt
 if ERRORLEVEL 1 goto testFailed
@@ -45,6 +45,16 @@ if ERRORLEVEL 1 goto testFailed
 %program% 5 1 10 > out.txt
 if ERRORLEVEL 1 goto testFailed
 fc.exe out.txt NoRoots.txt
+if ERRORLEVEL 1 goto testFailed
+
+%program% 5 1111111111111111111111111111111 10 > out.txt
+if ERRORLEVEL 1 goto testFailed
+fc.exe out.txt TooHighValue.txt
+if ERRORLEVEL 1 goto testFailed
+
+%program% 5 ss 10 > out.txt
+if ERRORLEVEL 1 goto testFailed
+fc.exe out.txt NotCorrectNumber.txt
 if ERRORLEVEL 1 goto testFailed
 
 echo OK
