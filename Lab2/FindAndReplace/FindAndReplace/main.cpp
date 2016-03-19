@@ -22,5 +22,17 @@ int main(int argc, char *argv[])
 			std::cout << FindAndReplace(subject, search, replace) << std::endl;
 		}
 	}
+	else if ((argc == 2) && (argv[1] == "help"))
+	{
+		std::cout << "FindAndReplace.exe <search> <replace>" << std::endl;
+	}
+	else if (argc > 3)
+	{
+		std::cout << "Error. The number of arguments exceeds the limit. Use 'help' for more information." << std::endl;
+	}
+	else if (argc < 3)
+	{
+		std::cout << "Error. Not enough arguments. Use 'help' for more information." << std::endl;
+	}
 	return 0;
 }
