@@ -3,17 +3,8 @@
 #include "..\FindAndReplace\FindAndReplace.h"
 
 BOOST_AUTO_TEST_SUITE(Replace_function)
-BOOST_AUTO_TEST_CASE(give_empty_string)
-{
-	std::string subject = "";
-	std::string search = "hello";
-	std::string replace = "world";
 
-	std::string str = FindAndReplace(subject, search, replace);
-	BOOST_CHECK(str == "");
-}
-
-BOOST_AUTO_TEST_CASE(give_subject_string)
+BOOST_AUTO_TEST_CASE(give_subject_without_replace)
 {
 	std::string subject = "Hello";
 	std::string search = "world";
@@ -23,14 +14,33 @@ BOOST_AUTO_TEST_CASE(give_subject_string)
 	BOOST_CHECK(str == "Hello");
 }
 
-BOOST_AUTO_TEST_CASE(give_string_papama)
+BOOST_AUTO_TEST_CASE(give_string_with_replace)
 {
-	std::string subject = "mamama";
-	std::string search = "mama";
-	std::string replace = "papa";
+	std::string subject = "All cats like fish";
+	std::string search = "cats";
+	std::string replace = "people";
 
 	std::string str = FindAndReplace(subject, search, replace);
-	BOOST_CHECK(str == "papama");
+	BOOST_CHECK(str == "All people like fish");
 }
 
+BOOST_AUTO_TEST_CASE(replace_string_with_another_register)
+{
+	std::string subject = "This is an apple";
+	std::string search = "is";
+	std::string replace = "IS";
+
+	std::string str = FindAndReplace(subject, search, replace);
+	BOOST_CHECK(str == "ThIS IS an apple");
+}
+
+BOOST_AUTO_TEST_CASE(when_replace_string_contains_search_string)
+{
+	std::string subject = "blablabla";
+	std::string search = "bla";
+	std::string replace = "blabla";
+
+	std::string str = FindAndReplace(subject, search, replace);
+	BOOST_CHECK(str == "blablablablablabla");
+}
 BOOST_AUTO_TEST_SUITE_END()
