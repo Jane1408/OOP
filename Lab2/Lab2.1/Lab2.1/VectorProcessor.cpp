@@ -11,14 +11,13 @@ void ProcessVector(vector<double> & numbers)
 	{
 		double minElement = *min_element(numbers.begin(), numbers.end());
 		double maxElement = *max_element(numbers.begin(), numbers.end());
-		 
-		double multiply = maxElement / minElement;
+		double multiplier = maxElement;
 
-		auto MyltiplicationNumber = [multiply](double number)
+		if (minElement != 0)
 		{
-			return number =  number * multiply;
-		};
-		transform(numbers, numbers.begin(), MyltiplicationNumber);
-		sort(numbers.begin(), numbers.end());
+			multiplier = maxElement / minElement;
+		}
+		transform(numbers, numbers.begin(), bind2nd(multiplies<double>(), multiplier));
+		
 	}
 }
