@@ -21,7 +21,7 @@ BOOST_AUTO_TEST_CASE(makes_empty_vector_from_empty_vector)
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(when_min_element_equal_to_max)
-BOOST_AUTO_TEST_CASE(does_not_change_vector_containing_same_numbers)
+BOOST_AUTO_TEST_CASE(should_not_change_vector_containing_same_numbers)
 {
 	vector<double> numbers = {3, 3, 3};
 	auto copy(numbers); 
@@ -29,7 +29,7 @@ BOOST_AUTO_TEST_CASE(does_not_change_vector_containing_same_numbers)
 	BOOST_CHECK(numbers == copy);
 }
 
-BOOST_AUTO_TEST_CASE(does_not_change_vector_containing_one_element)
+BOOST_AUTO_TEST_CASE(should_not_change_vector_containing_one_element)
 {
 	vector<double> numbers = { 3 };
 	auto copy(numbers); 
@@ -38,9 +38,9 @@ BOOST_AUTO_TEST_CASE(does_not_change_vector_containing_one_element)
 }
 BOOST_AUTO_TEST_SUITE_END()
 
-BOOST_AUTO_TEST_SUITE(min_and_max_elements_of_vector_are_vary)
-BOOST_AUTO_TEST_SUITE(when_min_element_equal_zero)
-BOOST_AUTO_TEST_CASE(min_element_equal_zero)
+BOOST_AUTO_TEST_SUITE(when_the_maximum_and_minimum_element_of_the_vector_are_different)
+BOOST_AUTO_TEST_SUITE(when_minimum_element_equal_to_zero)
+BOOST_AUTO_TEST_CASE(should_not_divide_elements_by_minimum_element)
 {
 	vector<double> numbers = { 0, 1, 2, 3};
 	ProcessVector(numbers);
@@ -51,8 +51,9 @@ BOOST_AUTO_TEST_CASE(min_element_equal_zero)
 }
 BOOST_AUTO_TEST_SUITE_END()
 
-BOOST_AUTO_TEST_SUITE(when_min_element_not_equal_zero)
-BOOST_AUTO_TEST_CASE(min_element_negative_and_max_element_positive)
+
+BOOST_AUTO_TEST_SUITE(when_minimum_element_is_negative_and_maximum_element_is_positive)
+BOOST_AUTO_TEST_CASE(should_change_the_signs_of_the_elements_on_the_opposite_signs)
 {
 	vector<double> numbers = { -1, -2, 2, 1 };
 	ProcessVector(numbers);
@@ -63,8 +64,10 @@ BOOST_AUTO_TEST_CASE(min_element_negative_and_max_element_positive)
 	{ (-1 * multiplier), (-2 * multiplier), (2 * multiplier), (1 * multiplier) }
 	));
 }
+BOOST_AUTO_TEST_SUITE_END()
 
-BOOST_AUTO_TEST_CASE(min_element_negative_and_max_element_negative)
+BOOST_AUTO_TEST_SUITE(when_minimum_element_is_negative_and_maximum_element_is_negative)
+BOOST_AUTO_TEST_CASE(should_not_change_the_signs_of_the_elements_and_all_elements_will_be_negative)
 {
 	vector<double> numbers = { -1, -2, -3, -4 };
 	ProcessVector(numbers);
@@ -75,8 +78,10 @@ BOOST_AUTO_TEST_CASE(min_element_negative_and_max_element_negative)
 	{ (-1 * multiplier), (-2 * multiplier), (-3 * multiplier), (-4 * multiplier) }
 	));
 }
+BOOST_AUTO_TEST_SUITE_END()
 
-BOOST_AUTO_TEST_CASE(min_element_positive_and_max_element_positive)
+BOOST_AUTO_TEST_SUITE(when_minimum_element_is_positive_and_maximum_element_is_positive)
+BOOST_AUTO_TEST_CASE(should_not_change_the_signs_of_the_elements_and_all_elements_will_be_positive)
 {
 	vector<double> numbers = { 1, 2, 3, 4 };
 	ProcessVector(numbers);

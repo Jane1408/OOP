@@ -17,7 +17,7 @@ void ProcessVector(vector<double> & numbers)
 		{
 			multiplier = maxElement / minElement;
 		}
-		transform(numbers, numbers.begin(), bind2nd(multiplies<double>(), multiplier));
+		transform(numbers, numbers.begin(), bind1st(multiplies<double>(), multiplier));
 		
 	}
 }
