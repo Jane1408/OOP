@@ -9,7 +9,7 @@
 #include <cmath>
 #include <vector>
 
-bool CheckArguments(std::vector<std::string> args)
+bool CheckArguments(std::vector<std::string> const& args)
 {
 	if (args.size() == 4)
 	{
@@ -25,7 +25,7 @@ bool CheckArguments(std::vector<std::string> args)
 		std::cout << "Error. The number of arguments exceeds the limit. Use 'help' for more information." << std::endl;
 		return false;
 	}
-	else if (args.size() < 4)
+	else // when args.size() < 4
 	{
 		std::cout << "Error. Not enough arguments. Use 'help' for more information." << std::endl;
 		return false;
