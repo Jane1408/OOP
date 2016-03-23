@@ -3,8 +3,29 @@
 #include "..\FindAndReplace\FindAndReplace.h"
 
 BOOST_AUTO_TEST_SUITE(Replace_function)
+BOOST_AUTO_TEST_SUITE(when_one_of_arguments_is_empty)
+BOOST_AUTO_TEST_CASE(when_search_string_is_empty_return_string_without_replace)
+{
+	std::string subject = "Hello";
+	std::string search = "";
+	std::string replace = "bye";
 
-BOOST_AUTO_TEST_CASE(give_subject_without_replace)
+	std::string str = FindAndReplace(subject, search, replace);
+	BOOST_CHECK(str == "Hello");
+}
+
+BOOST_AUTO_TEST_CASE(when_replace_string_is_empty_return_string_with_replacement_serach_string_to_empty_string)
+{
+	std::string subject = "Hello";
+	std::string search = "H";
+	std::string replace = "";
+
+	std::string str = FindAndReplace(subject, search, replace);
+	BOOST_CHECK(str == "ello");
+}
+BOOST_AUTO_TEST_SUITE_END()
+
+BOOST_AUTO_TEST_CASE(give_string_without_replace)
 {
 	std::string subject = "Hello";
 	std::string search = "world";
