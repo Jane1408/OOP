@@ -25,7 +25,7 @@ BOOST_AUTO_TEST_CASE(when_replace_string_is_empty_return_string_with_replacement
 }
 BOOST_AUTO_TEST_SUITE_END()
 
-BOOST_AUTO_TEST_CASE(give_string_without_replace)
+BOOST_AUTO_TEST_CASE(when_subject_string_not_contains_search_string_should_give_string_without_replace)
 {
 	std::string subject = "Hello";
 	std::string search = "world";
@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE(give_string_without_replace)
 	BOOST_CHECK(str == "Hello");
 }
 
-BOOST_AUTO_TEST_CASE(give_string_with_replace)
+BOOST_AUTO_TEST_CASE(when_subject_string_contains_search_string_should_give_string_with_replace)
 {
 	std::string subject = "All cats like fish";
 	std::string search = "cats";
@@ -45,7 +45,7 @@ BOOST_AUTO_TEST_CASE(give_string_with_replace)
 	BOOST_CHECK(str == "All people like fish");
 }
 
-BOOST_AUTO_TEST_CASE(replace_string_with_another_register)
+BOOST_AUTO_TEST_CASE(when_subject_string_contains_search_string__with_another_register_should_give_string_with_replace)
 {
 	std::string subject = "This is an apple";
 	std::string search = "is";
@@ -55,7 +55,7 @@ BOOST_AUTO_TEST_CASE(replace_string_with_another_register)
 	BOOST_CHECK(str == "ThIS IS an apple");
 }
 
-BOOST_AUTO_TEST_CASE(when_replace_string_contains_search_string)
+BOOST_AUTO_TEST_CASE(when_replace_string_contains_search_string_should_give_string_with_replace)
 {
 	std::string subject = "blablabla";
 	std::string search = "bla";
