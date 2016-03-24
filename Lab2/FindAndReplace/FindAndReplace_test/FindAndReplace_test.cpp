@@ -45,7 +45,7 @@ BOOST_AUTO_TEST_CASE(when_subject_string_contains_search_string_should_give_stri
 	BOOST_CHECK(str == "All people like fish");
 }
 
-BOOST_AUTO_TEST_CASE(when_subject_string_contains_search_string__with_another_register_should_give_string_with_replace)
+BOOST_AUTO_TEST_CASE(when_search_string_equal_to_replace_string_with_another_register_should_give_string_with_replace)
 {
 	std::string subject = "This is an apple";
 	std::string search = "is";
@@ -55,7 +55,7 @@ BOOST_AUTO_TEST_CASE(when_subject_string_contains_search_string__with_another_re
 	BOOST_CHECK(str == "ThIS IS an apple");
 }
 
-BOOST_AUTO_TEST_CASE(when_replace_string_contains_search_string_should_give_string_with_replace)
+BOOST_AUTO_TEST_CASE(when_replace_string_contains_search_string_should_not_replace_the_search_string_in_the_treated_areas)
 {
 	std::string subject = "blablabla";
 	std::string search = "bla";

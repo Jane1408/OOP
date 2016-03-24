@@ -2,27 +2,27 @@
 #include "FindAndReplace.h"
 #include <boost/utility/string_ref.hpp>
 
-bool StringComparison(boost::string_ref const& subject, boost::string_ref const& search, size_t i)
+bool StringContainsSubstringAtPos(boost::string_ref const& subject, boost::string_ref const& search, size_t i)
 {
 	return (subject.substr(i, search.length()) == search);
 }
 
 std::string FindAndReplace(std::string const& subject, std::string const& search, std::string  const& replace)
 {
-	std::string finalString;
+	std::string resultString;
 	for (size_t i = 0; i < subject.length();)
 	{
 		if (subject[i] == search[0])
 		{
-			if ((i + search.length() <= subject.length()) && StringComparison(subject, search, i))
+			if ((i + search.length() <= subject.length()) && StringContainsSubstringAtPos(subject, search, i))
 			{
-				finalString += replace;
+				resultString += replace;
 				i += search.length();
 				continue;
 			}
 		}
-		finalString += subject[i];
+		resultString += subject[i];
 		i++;
 	}
-	return finalString;
+	return resultString;
 }
