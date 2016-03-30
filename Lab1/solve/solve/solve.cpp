@@ -50,14 +50,12 @@ bool IsCorrectNumber(std::string const& number)
 	return true;
 }
 
-bool CheckNumbersArguments(std::vector<std::string> args)
+bool CheckNumbersArguments(std::vector<std::string> & args)
 {
-	if (IsCorrectNumber(args[1]) && IsCorrectNumber(args[2]) && IsCorrectNumber(args[3]))
-		return true;
-	return false;
+	return (IsCorrectNumber(args[1]) && IsCorrectNumber(args[2]) && IsCorrectNumber(args[3]));
 }
 
-double Discriminant(double parameterA, double parameterB, double parameterC)
+double DiscriminantCalculation(double parameterA, double parameterB, double parameterC)
 {
 	return (parameterB * parameterB) - (4 * parameterA * parameterC);
 }
@@ -72,11 +70,11 @@ double FindSingleRoot(double parameterA, double parameterB, double parameterC, d
 	return (-parameterB + sqrt(discriminant)) / (2 * parameterA);
 }
 
-void Calculation(double parameterA, double parameterB, double parameterC)
+void RootCalculation(double parameterA, double parameterB, double parameterC)
 {
 	double root = 0;
 	std::pair<double, double> roots = {0, 0};
-	double discriminant = Discriminant(parameterA, parameterB, parameterC);
+	double discriminant = DiscriminantCalculation(parameterA, parameterB, parameterC);
 	if (discriminant > 0)
 	{
 		roots = FindRoots(parameterA, parameterB, parameterC, discriminant);
@@ -105,10 +103,12 @@ int main(int argc, char* argv[])
 			double parameterC = atoi(argv[3]);
 			if (parameterA != 0)
 			{
-				Calculation(parameterA, parameterB, parameterC);
+				RootCalculation(parameterA, parameterB, parameterC);
 			}
 			else
+			{
 				std::cout << "Error. The equation is not quadratic. " << std::endl;
+			}
 		}
 	}
 	return 0;
