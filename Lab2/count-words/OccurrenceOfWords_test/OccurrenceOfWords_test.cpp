@@ -49,4 +49,17 @@ BOOST_AUTO_TEST_CASE(should_considered_that_same_words_in_different_registers_ar
 	BOOST_CHECK(CheckEqualMaps(wordsStore, checkStore));
 }
 BOOST_AUTO_TEST_SUITE_END()
+
+BOOST_AUTO_TEST_SUITE(when_input_string_contains_multiple_spaces_in_a_row)
+BOOST_AUTO_TEST_CASE(should_count_the_number_of_words_excluding_the_number_of_spaces)
+{
+	string inputString = "All   should  love		cats";
+	map <string, size_t> checkStore = { { "all", 1 },
+	{ "should", 1 },
+	{ "love", 1 }, 
+	{ "cats", 1 }};
+	map <string, size_t> wordsStore = FindAndCountWordsFromString(inputString);
+	BOOST_CHECK(CheckEqualMaps(wordsStore, checkStore));
+}
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

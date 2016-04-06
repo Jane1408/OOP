@@ -32,18 +32,20 @@ std::map<std::string, size_t> FindAndCountWordsFromString(std::string & inputStr
 	std::string word;
 	std::map<std::string, size_t> wordsStore;
 	ConvertToLowercase(inputString);
-	for (size_t i = 0; i <= inputString.length(); ++i)
+	for (size_t i = 0; i < inputString.length(); ++i)
 	{
-		if ((CheckDelimiterSymbol(inputString[i])) || (i == inputString.length() && !CheckDelimiterSymbol(inputString[i])))
+		if (!CheckDelimiterSymbol(inputString[i]))
+		{
+			word += inputString[i];
+		}
+		if (CheckDelimiterSymbol(inputString[i]) || ((i == inputString.length() - 1) && !CheckDelimiterSymbol(inputString[i])))
 		{
 			if (!word.empty())
 			{
 				CountWords(word, wordsStore);
 				word = "";
-				continue;
 			}
 		}
-		word += inputString[i];
 	}
 	return wordsStore;
 }
