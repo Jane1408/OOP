@@ -29,7 +29,7 @@ BOOST_AUTO_TEST_CASE(should_make_empty_map)
 }
 BOOST_AUTO_TEST_SUITE_END()
 
-BOOST_AUTO_TEST_SUITE(when_input_string_contains_same_russian_words_in_different_registers)
+BOOST_AUTO_TEST_SUITE(when_input_string_contains_same_words_in_different_registers)
 BOOST_AUTO_TEST_CASE(should_considered_that_same_russian_words_in_different_registers_are_equal)
 {
 	setlocale(LC_ALL, "Russian");
@@ -38,9 +38,7 @@ BOOST_AUTO_TEST_CASE(should_considered_that_same_russian_words_in_different_regi
 	map <string, size_t> wordsStore = FindAndCountWordsFromString(inputString);
 	BOOST_CHECK(CheckEqualMaps(wordsStore, checkStore));
 }
-BOOST_AUTO_TEST_SUITE_END()
 
-BOOST_AUTO_TEST_SUITE(when_input_string_contains_same_words_in_different_registers)
 BOOST_AUTO_TEST_CASE(should_considered_that_same_words_in_different_registers_are_equal)
 {
 	string inputString = "Meow MeoW mEoW MeOw";

@@ -11,7 +11,7 @@ void ConvertToLowercase(std::string & word)
 
 bool IsDelimiter(const char & symbol)
 {
-	return ((symbol == '	') || (symbol == ' ') || (symbol == '.') || (symbol == ','));
+	return ((symbol == '\t') || (symbol == ' ') || (symbol == '.') || (symbol == ','));
 }
 
 std::map<std::string, size_t> FindAndCountWordsFromString(std::string const& inputString)
