@@ -9,7 +9,6 @@ int main()
 {
 	CCar car;
 	std::string command;
-	std::string error;
 	while (!std::cin.eof() && !std::cin.fail())
 	{
 		std::cout << "> ";
