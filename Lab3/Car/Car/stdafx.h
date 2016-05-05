@@ -14,6 +14,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <algorithm>
 
 
 // TODO: Установите здесь ссылки на дополнительные заголовки, требующиеся для программы
