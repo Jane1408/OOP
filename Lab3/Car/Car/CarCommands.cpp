@@ -101,9 +101,13 @@ void IteractionWithCar(std::string const& command, CCar & car)
 			ShowHelp();
 			break;
 		}
+		if (!car.GetError().empty())
+			std::cout << car.GetError() << std::endl;
 	}
 	else
 	{
 		std::cout << "Invalid command" << std::endl;
 	}
+
+	
 }

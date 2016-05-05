@@ -15,9 +15,6 @@ int main()
 		std::cout << "> ";
 		std::cin >> command;
 		IteractionWithCar(command, car);
-		error = car.GetError();
-		if (!error.empty())
-			std::cout << error << std::endl;
 	}
     return 0;
 }
