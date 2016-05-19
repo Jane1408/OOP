@@ -1,6 +1,7 @@
 #pragma once
 
-typedef std::vector<std::vector<std::pair<int, int>>> Polygon;
+typedef std::pair<int, int> PairInt;
+typedef std::vector<std::vector<PairInt>> Polygon;
 
 static const char WATER_PLACE = '@';
 static const char SAND_PLACE = '.';
@@ -13,16 +14,15 @@ class CFurSeal
 {
 public:
 	CFurSeal(std::string const& path);
-	~CFurSeal();
 
 	void WriteIntotheFile();
 	std::pair<unsigned, unsigned> GetAnswer();
 private:
 	void ReadDataFromFile(std::string const& path);
 	void FindAnswer();
-	void Wave(std::pair<int, int> const& pos, std::vector<std::pair<int, int>> & queue);
-
+	void Wave(PairInt const& pos, std::vector<PairInt> & queue);
 	void FindPath();
+
 	Polygon m_polygon;
 	int m_width;
 	int m_height;

@@ -1,0 +1,2 @@
+little ball of fur
+./test_files/inputText2.txt

@@ -2,17 +2,15 @@
 #include "FurSeal.h"
 
 using namespace std;
-typedef std::vector<std::vector<std::pair<int, int>>> Polygon;
+
+// TODO: use structures instead of std::pair, comment what means each field in structure
+typedef std::pair<int, int> PairInt;
+typedef std::vector<std::vector<PairInt>> Polygon;
 
 CFurSeal::CFurSeal(std::string const& path)
 {
 	ReadDataFromFile(path);
 	FindAnswer();
-}
-
-
-CFurSeal::~CFurSeal()
-{
 }
 
 void CFurSeal::WriteIntotheFile()
@@ -47,7 +45,7 @@ void CFurSeal::ReadDataFromFile(std::string const & path)
 	input >> m_height;
 	input >> m_width;
 
-	m_polygon.resize(m_height, vector<pair<int, int>>(m_width, {0, INT_MAX }));
+	m_polygon.resize(m_height, vector<PairInt>(m_width, {0, INT_MAX }));
 
 	m_polygon[0][0].second = 1;
 	string line;
@@ -71,44 +69,34 @@ void CFurSeal::ReadDataFromFile(std::string const & path)
 		++lineCount;
 	}
 }
-
-void CFurSeal::Wave(pair<int, int> const& pos, vector<pair<int, int>> & queue)
+void FillQueue(Polygon & m_polygon, vector<PairInt> & queue, const PairInt & pos, int valX, int valY)
 {
-	if (pos.first > 0 && 
-		m_polygon[pos.first - 1][pos.second].second >  m_polygon[pos.first][pos.second].second + m_polygon[pos.first - 1][pos.second].first)
+	if (m_polygon[pos.first + valX][pos.second + valY].second > m_polygon[pos.first][pos.second].second + m_polygon[pos.first + valX][pos.second + valY].first)
 	{
-		m_polygon[pos.first - 1][pos.second].second = m_polygon[pos.first][pos.second].second + m_polygon[pos.first - 1][pos.second].first;
-		queue.push_back({ pos.first - 1, pos.second });
+		m_polygon[pos.first + valX][pos.second + valY].second = m_polygon[pos.first][pos.second].second + m_polygon[pos.first + valX][pos.second + valY].first;
+		queue.push_back({ pos.first + valX, pos.second + valY });
 	}
-	if (pos.first < m_width - 1 &&
-		m_polygon[pos.first + 1][pos.second].second >  m_polygon[pos.first][pos.second].second + m_polygon[pos.first + 1][pos.second].first)
-	{
-		m_polygon[pos.first + 1][pos.second].second = m_polygon[pos.first][pos.second].second + m_polygon[pos.first + 1][pos.second].first;
-		queue.push_back({ pos.first + 1, pos.second });
-	}
-	if (pos.second > 0 &&
-		m_polygon[pos.first][pos.second - 1].second >  m_polygon[pos.first][pos.second].second + m_polygon[pos.first][pos.second - 1].first)
-	{
-		m_polygon[pos.first][pos.second - 1].second = m_polygon[pos.first][pos.second].second + m_polygon[pos.first][pos.second - 1].first;
-		queue.push_back({ pos.first, pos.second - 1 });
-	}
-	if (pos.second < m_height - 1 &&
-		m_polygon[pos.first][pos.second + 1].second >  m_polygon[pos.first][pos.second].second + m_polygon[pos.first][pos.second + 1].first)
-	{
-		m_polygon[pos.first][pos.second + 1].second = m_polygon[pos.first][pos.second].second + m_polygon[pos.first][pos.second + 1].first;
-		queue.push_back({ pos.first, pos.second + 1 });
-	}
+}
+void CFurSeal::Wave(PairInt const& pos, vector<PairInt> & queue)
+{
+	if (pos.first > 0)
+		FillQueue(m_polygon, queue, pos, -1, 0);
+	if (pos.first < m_width - 1)
+		FillQueue(m_polygon, queue, pos, 1, 0);
+	if (pos.second > 0)
+		FillQueue(m_polygon, queue, pos, 0, -1);
+	if (pos.second < m_height - 1)
+		FillQueue(m_polygon, queue, pos, 0, 1);
 }
 
 void CFurSeal::FindPath()
 {
-	std::vector<std::pair<int, int>> queue;
-	queue.push_back({ 0, 0 });
+	std::vector<PairInt> queue = { {0, 0} };
+	
 	while (!queue.empty())
 	{
-		std::pair<int, int> pos = queue.back();
+		PairInt pos = queue.back();
 		queue.pop_back();
 		Wave(pos, queue);
-		
 	}
 }
