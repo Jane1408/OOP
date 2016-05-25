@@ -8,14 +8,18 @@ CKMP::CKMP()
 	
 }
 
-void CKMP::AlgorithmKMP(std::string const & input)
+void CKMP::DoAlgorithmKMP(std::string const & input)
 {
 	std::string textFile;
 	std::ifstream inputFile(input);
 	std::getline(inputFile, m_needle);
 	std::getline(inputFile, textFile);
 	inputFile.close();
+	FindStringInFile(textFile);
+}
 
+void CKMP::FindStringInFile(std::string const & textFile)
+{
 	std::ifstream inputText(textFile);
 	std::string line;
 
@@ -36,7 +40,7 @@ void CKMP::WriteIntoOutputFile()
 	std::ofstream outputFile("output.txt");
 	for (auto &it : m_result)
 	{
-		outputFile << it.first << " " << it.second + 1 << std::endl;
+		outputFile << it.first << " " << it.second << std::endl;
 	}
 	outputFile.close();
 }

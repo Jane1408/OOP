@@ -8,7 +8,7 @@
 int main()
 {
 	CKMP kmp;
-	kmp.AlgorithmKMP("input.txt");
+	kmp.DoAlgorithmKMP("input.txt");
 	kmp.WriteIntoOutputFile();
     return 0;
 }

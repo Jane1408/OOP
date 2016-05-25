@@ -4,10 +4,11 @@ class CKMP
 {
 public:
 	CKMP();
-	void AlgorithmKMP(std::string const& input);
+	void DoAlgorithmKMP(std::string const& input);
 	void WriteIntoOutputFile();
 	std::vector<std::pair<size_t, size_t>> GetResults();
 private:
+	void FindStringInFile(std::string const& textFile);
 	std::vector<int> GetSearchPrefixFunctions();
 	std::vector<size_t> Find(std::string const& text);
 
