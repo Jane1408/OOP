@@ -11,7 +11,7 @@ private:
 	void ReadFromFile(std::string const& input);
 	void FindAnswer();
 
-	std::vector <std::pair <size_t, size_t>> m_distanceAndMoney;
+	std::multimap < int, std::pair<int, int> > m_moneyAndDistance;
 	std::pair <int, int> m_pairOfBanks;
 	int m_maxMoney;
 	size_t m_numOfBanks;

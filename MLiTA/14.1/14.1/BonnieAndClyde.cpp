@@ -1,8 +1,11 @@
 #include "stdafx.h"
 #include "BonnieAndClyde.h"
+#include <algorithm>
 
 
 CBonnieAndClyde::CBonnieAndClyde(std::string const & input)
+	: m_maxMoney(-1)
+	, m_pairOfBanks({ -1, -1 })
 {
 	ReadFromFile(input);
 	FindAnswer();
@@ -20,35 +23,33 @@ void CBonnieAndClyde::ReadFromFile(std::string const & input)
 	std::ifstream inputFile(input);
 	inputFile >> m_numOfBanks;
 	inputFile >> m_minDistance;
-	size_t money;
-	size_t distance;
-	for (size_t i = 0; i < m_numOfBanks; ++i)
+	int money;
+	int distance;
+	for (int i = 1; i <= m_numOfBanks; ++i)
 	{
 		inputFile >> distance;
 		inputFile >> money;
-		m_distanceAndMoney.push_back({ distance, money });
+		m_moneyAndDistance.insert({ money, {distance, i} });
 	}
 	inputFile.close();
 }
 
 void CBonnieAndClyde::FindAnswer()
 {
-	m_maxMoney = -1;
-	m_pairOfBanks = { -1, -1 };
-	int moneyInTwoBanks = 0;
-	for (size_t i = 0; i < m_distanceAndMoney.size(); ++i)
+	for (auto it1 = m_moneyAndDistance.rbegin(); it1 != m_moneyAndDistance.rend(); ++it1)
 	{
-		for (size_t j = i; j < m_distanceAndMoney.size(); ++j)
+		for (auto it2 = it1; it2 != m_moneyAndDistance.rend(); ++it2)
 		{
-			if ((m_distanceAndMoney[i].first + m_minDistance) <= m_distanceAndMoney[j].first)
+			if (std::abs((it1->second.first) - (it2->second.first)) >= m_minDistance)
 			{
-				moneyInTwoBanks = m_distanceAndMoney[i].second + m_distanceAndMoney[j].second;
-				if (m_maxMoney < moneyInTwoBanks)
-				{
-					m_maxMoney = moneyInTwoBanks;
-					m_pairOfBanks = { i + 1, j + 1 };
-				}
+				m_pairOfBanks = { it1->second.second , it2->second.second };
+				m_maxMoney = it1->first + it2->first;
+				break;
 			}
+		}
+		if (m_maxMoney != -1)
+		{
+			break;
 		}
 	}
 }
