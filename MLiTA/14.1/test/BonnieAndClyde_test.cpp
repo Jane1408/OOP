@@ -27,4 +27,11 @@ BOOST_AUTO_TEST_CASE(when_input_file_is_correct_but_is_no_decision)
 	BOOST_CHECK_EQUAL(testBAC.GetNumbersOfBanks().second, -1);
 };
 
+BOOST_AUTO_TEST_CASE(when_input_file_is_correct_check_correct_of_algorithm)
+{
+	CBonnieAndClyde testBAC("./testing_files/input4.txt");
+	BOOST_CHECK_EQUAL(testBAC.GetMaxMoney(), 13);
+	BOOST_CHECK_EQUAL(testBAC.GetNumbersOfBanks().first, 4);
+	BOOST_CHECK_EQUAL(testBAC.GetNumbersOfBanks().second, 2);
+};
 BOOST_AUTO_TEST_SUITE_END();

@@ -36,20 +36,22 @@ void CBonnieAndClyde::ReadFromFile(std::string const & input)
 
 void CBonnieAndClyde::FindAnswer()
 {
-	for (auto it1 = m_moneyAndDistance.rbegin(); it1 != m_moneyAndDistance.rend(); ++it1)
+	auto rangeBegin = m_moneyAndDistance.rbegin();
+	auto rangeEnd = m_moneyAndDistance.rend();
+	for (auto it1 = rangeBegin; it1 != rangeEnd; ++it1)
 	{
-		for (auto it2 = it1; it2 != m_moneyAndDistance.rend(); ++it2)
+		for (auto it2 = it1; it2 != rangeEnd; ++it2)
 		{
 			if (std::abs((it1->second.first) - (it2->second.first)) >= m_minDistance)
 			{
-				m_pairOfBanks = { it1->second.second , it2->second.second };
-				m_maxMoney = it1->first + it2->first;
-				break;
+				if (m_maxMoney < (it1->first + it2->first))
+				{
+					m_pairOfBanks = { it1->second.second , it2->second.second };
+					m_maxMoney = it1->first + it2->first;
+					rangeEnd = it2;
+					break;
+				}
 			}
-		}
-		if (m_maxMoney != -1)
-		{
-			break;
 		}
 	}
 }

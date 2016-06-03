@@ -14,7 +14,7 @@ private:
 	std::multimap < int, std::pair<int, int> > m_moneyAndDistance;
 	std::pair <int, int> m_pairOfBanks;
 	int m_maxMoney;
-	size_t m_numOfBanks;
-	size_t m_minDistance;
+	int m_numOfBanks;
+	int m_minDistance;
 };
 
