@@ -24,8 +24,6 @@ public:
 	//////////////////////////////////////////////////////////////////////////
 	double ToDouble() const;
 
-
-
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 2. Реализовать унарный + и унарный -
 	// Указание: см. материалы к лекции
@@ -57,9 +55,6 @@ public:
 	//	1 + (1/2)     = (3/2)
 	//////////////////////////////////////////////////////////////////////////
 
-	const CRational operator+ (const CRational& secondVal) const;
-
-	const CRational operator+ (int const& value) const;
 
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 4. Реализовать бинарный -
@@ -69,11 +64,6 @@ public:
 	//	(1/2) - 1     = (-1/2)
 	//	1 - (1/2)     = (1/2)
 	//////////////////////////////////////////////////////////////////////////
-
-	const CRational operator- (const CRational& secondVal) const;
-
-	const CRational operator- (int const& value) const;
-
 
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 5. Реализовать оператор +=
@@ -105,10 +95,6 @@ public:
 	//	(7*2) / 3     = (14/3)
 	//////////////////////////////////////////////////////////////////////////
 
-	const CRational operator *(CRational const& other) const;
-
-	const CRational operator* (int const& value) const;
-
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 8. Реализовать оператор /
 	// Возвращает частное двух рациональных чисел, 
@@ -118,10 +104,6 @@ public:
 	//	7 ⁄ (2/3)     = (21/2)
 	//////////////////////////////////////////////////////////////////////////
 
-
-	const CRational operator/ (CRational const& other) const;
-
-	const CRational operator/ (int const& value) const;
 
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 9. Реализовать оператор *=
@@ -133,7 +115,7 @@ public:
 
 	CRational CRational::operator*= (const CRational& other);
 
-	CRational CRational::operator*= (int const& value);
+	CRational CRational::operator*= (int value);
 
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 10. Реализовать оператор /=
@@ -145,7 +127,7 @@ public:
 
 	CRational CRational::operator/= (const CRational& other);
 
-	CRational CRational::operator/= (int const& value);
+	CRational CRational::operator/= (int value);
 
 
 	//////////////////////////////////////////////////////////////////////////
@@ -162,11 +144,11 @@ public:
 
 	bool CRational::operator== (const CRational& other);
 
-	bool CRational::operator== (int const& value);
+	bool CRational::operator== (int value);
 
 	bool CRational::operator!= (const CRational& other);
 
-	bool CRational::operator!= (int const& value);
+	bool CRational::operator!= (int value);
 
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 12. Реализовать операторы <, >, <=, >=
@@ -189,13 +171,13 @@ public:
 	bool const CRational::operator>= (const CRational& other);
 
 
-	bool const CRational::operator< (const int& other);
+	bool const CRational::operator< (int other);
 
-	bool const CRational::operator> (const int& other);
+	bool const CRational::operator> (int other);
 
-	bool const CRational::operator<= (const int& other);
+	bool const CRational::operator<= (int other);
 
-	bool const CRational::operator>= (const int& other);
+	bool const CRational::operator>= (int other);
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 13. Реализовать оператор вывода рационального числа в выходной поток 
 	//	std::ostream в формате <числитель>/<знаменатель>, 
@@ -220,30 +202,25 @@ private:
 // Вычисляет наибольший общий знаменатель чисел a и b
 unsigned GCD(unsigned a, unsigned b);
 
-CRational operator+ (int firstVal, const CRational& secondVal);
+//CRational operator+ (int first, const CRational& second);
+CRational operator+ (CRational const& first, CRational const& second);
 
-CRational operator- (int firstVal, const CRational& secondVal);
+CRational operator- (CRational const& first, CRational const& second);
 
-CRational operator* (int firstVal, const CRational& secondVal);
+CRational operator* (CRational const& first, CRational const& second);
 
-CRational operator/ (int firstVal, const CRational& secondVal);
+CRational operator/ (CRational const& first, CRational const& second);
 
 //11 задание
-bool operator== (int const& firstVal, const CRational& secondVal);
+bool operator== (int first, const CRational& second);
 
-bool operator!= (int const& firstVal, const CRational& secondVal);
+bool operator!= (int first, const CRational& second);
 
 //12 задание
-bool const operator< (const int& firstVal, const CRational& secondVal);
+bool const operator< (int first, const CRational& second);
 
-bool const operator> (const int& firstVal, const CRational& secondVal);
+bool const operator> (int first, const CRational& second);
 
-bool const operator<= (const int& firstVal, const CRational& secondVal);
+bool const operator<= (int first, const CRational& second);
 
-bool const operator>= (const int& firstVal, const CRational& secondVal);
-
-//13 задание
-std::ostream & operator<< (std::ostream & stream, CRational const& value);
-
-//14 задание 
-std::istream & operator>> (std::istream & stream, CRational & value);
+bool const operator>= (int first, const CRational& second);

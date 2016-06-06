@@ -66,47 +66,23 @@ CRational const CRational::operator+() const
 //////////////////////////////////////////////////////////////////////////
 // TODO: 3. Реализовать бинарный +
 //////////////////////////////////////////////////////////////////////////
-const CRational CRational::operator+ (const CRational& other) const
+CRational operator+ (CRational const& first, CRational const& second)
 {
-	auto numerator = (m_numerator * other.GetDenominator()) + (other.GetNumerator() * m_denominator);
-	auto denominator = m_denominator * other.GetDenominator();
+	auto numerator = (first.GetNumerator()* second.GetDenominator()) + (second.GetNumerator() * first.GetDenominator());
+	auto denominator = first.GetDenominator() * second.GetDenominator();
 	return CRational(numerator, denominator);
-}
-
-CRational operator+ (int first, const CRational& second)
-{
-	auto numerator = (first * second.GetDenominator()) + (second.GetNumerator());
-	auto denominator = second.GetDenominator();
-	return CRational(numerator, denominator);
-}
-
-const CRational CRational::operator+ (int const& value) const
-{
-	auto numerator = (m_numerator + (value * m_denominator));
-	return CRational(numerator, m_denominator);
 }
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 4. Реализовать бинарный -
 //////////////////////////////////////////////////////////////////////////
-const CRational CRational::operator- (const CRational& other) const
-{
-	auto numerator = (m_numerator * other.GetDenominator()) - (other.GetNumerator() * m_denominator);
-	auto denominator = m_denominator * other.GetDenominator();
-	return CRational(numerator, denominator);
-}
 
-CRational operator- (int first, const CRational& second)
-{
-	auto numerator = (first * second.GetDenominator()) - (second.GetNumerator());
-	auto denominator = second.GetDenominator();
-	return CRational(numerator, denominator);
-}
 
-const CRational CRational::operator- (int const& value) const
+CRational operator- (CRational const& first, CRational const& second)
 {
-	auto numerator = (m_numerator - (value * m_denominator));
-	return CRational(numerator, m_denominator);
+	auto numerator = (first.GetNumerator() * second.GetDenominator()) - (second.GetNumerator() * first.GetDenominator());
+	auto denominator = first.GetDenominator() * second.GetDenominator();
+	return CRational(numerator, denominator);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -136,43 +112,24 @@ CRational CRational::operator-=(CRational const & other)
 // TODO: 7. Реализовать оператор *
 //////////////////////////////////////////////////////////////////////////
 
-const CRational CRational::operator *(CRational const& other) const
+
+CRational operator *(CRational const& first, CRational const& second) 
 {
-	auto numerator = m_numerator * other.GetNumerator();
-	auto denominator = m_denominator * other.GetDenominator();
+	auto numerator = first.GetNumerator() * second.GetNumerator();
+	auto denominator = first.GetDenominator() * second.GetDenominator();
 	return CRational(numerator, denominator);
-}
-
-CRational operator* (int first, const CRational& second)
-{
-	return CRational(second.GetNumerator() * first, second.GetDenominator());
-}
-
-const CRational CRational::operator* (int const& value) const
-{
-	return CRational(m_numerator * value, m_denominator);
 }
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 8. Реализовать оператор /
 //////////////////////////////////////////////////////////////////////////
-const CRational CRational::operator/ (CRational const& other) const
+
+CRational operator/ (CRational const& first, CRational const& second) 
 {
-	auto numerator = m_numerator * other.GetDenominator();
-	auto denominator = m_denominator * other.GetNumerator();
+	auto numerator = first.GetNumerator() * second.GetDenominator();
+	auto denominator = first.GetDenominator() * second.GetNumerator();
 	return CRational(numerator, denominator);
 }
-
-CRational operator/ (int first, const CRational& second)
-{
-	return CRational(second.GetDenominator()  * first, second.GetNumerator());
-}
-
-const CRational CRational::operator/ (int const& value) const
-{
-	return CRational(m_numerator, m_denominator * value);
-}
-
 //////////////////////////////////////////////////////////////////////////
 // TODO: 9. Реализовать оператор *=
 //////////////////////////////////////////////////////////////////////////
@@ -184,7 +141,7 @@ CRational CRational::operator*= (const CRational& other)
 	return *this;
 }
 
-CRational CRational::operator*= (int const& value)
+CRational CRational::operator*= (int value)
 {
 	m_numerator *= value;
 	Normalize();
@@ -202,7 +159,7 @@ CRational CRational::operator/= (const CRational& other)
 	return *this;
 }
 
-CRational CRational::operator/= (int const& value)
+CRational CRational::operator/= (int value)
 {
 	m_denominator *= value;
 	Normalize();
@@ -217,12 +174,12 @@ bool CRational::operator== (const CRational& other)
 	return (GetNumerator() == other.GetNumerator() && GetDenominator() == other.GetDenominator());
 }
 
-bool CRational::operator== (int const& value)
+bool CRational::operator== (int value)
 {
 	return (GetNumerator() == value && GetDenominator() == 1);
 }
 
-bool operator== (int const& first, const CRational& second)
+bool operator== (int  first, const CRational& second)
 {
 	return (first == second.GetNumerator()) && (second.GetDenominator() == 1);
 }
@@ -232,12 +189,12 @@ bool CRational::operator!= (const CRational& other)
 	return (GetNumerator() != other.GetNumerator() || GetDenominator() != other.GetDenominator());
 }
 
-bool CRational::operator!= (int const& value)
+bool CRational::operator!= (int value)
 {
 	return (GetNumerator() != value || GetDenominator() != 1);
 }
 
-bool operator!= (int const& first, const CRational& second)
+bool operator!= (int first, const CRational& second)
 {
 	return (first != second.GetNumerator()) || (second.GetDenominator() != 1);
 }
@@ -250,12 +207,12 @@ bool const CRational::operator< (const CRational& other)
 	return ((m_numerator * other.GetDenominator()) < (other.GetNumerator() * m_denominator));
 }
 
-bool const CRational::operator< (const int& other)
+bool const CRational::operator< (int other)
 {
 	return (m_numerator < (other * m_denominator));
 }
 
-bool const operator< (const int& first, const CRational& second)
+bool const operator< (int first, const CRational& second)
 {
 	return ((first * second.GetDenominator()) < (second.GetNumerator()));
 }
@@ -265,12 +222,12 @@ bool const CRational::operator> (const CRational& other)
 	return ((m_numerator * other.GetDenominator()) > (other.GetNumerator() * m_denominator));
 }
 
-bool const CRational::operator> (const int& other)
+bool const CRational::operator> (int other)
 {
 	return (m_numerator > (other * m_denominator));
 }
 
-bool const operator> (const int& first, const CRational& second)
+bool const operator> (int first, const CRational& second)
 {
 	return ((first * second.GetDenominator()) > (second.GetNumerator()));
 }
@@ -280,12 +237,12 @@ bool const CRational::operator<= (const CRational& other)
 	return ((m_numerator * other.GetDenominator()) <= (other.GetNumerator() * m_denominator));
 }
 
-bool const CRational::operator<= (const int& other)
+bool const CRational::operator<= (int other)
 {
 	return (m_numerator <= (other * m_denominator));
 }
 
-bool const operator<= (const int& first, const CRational& second)
+bool const operator<= (int first, const CRational& second)
 {
 	return ((first * second.GetDenominator()) <= (second.GetNumerator()));
 }
@@ -295,12 +252,12 @@ bool const CRational::operator>= (const CRational& other)
 	return ((m_numerator * other.GetDenominator()) >= (other.GetNumerator() * m_denominator));
 }
 
-bool const CRational::operator>= (const int& other)
+bool const CRational::operator>= (int other)
 {
 	return (m_numerator >= (other * m_denominator));
 }
 
-bool const operator>= (const int& first, const CRational& second)
+bool const operator>= (int first, const CRational& second)
 {
 	return ((first * second.GetDenominator()) >= (second.GetNumerator()));
 }

@@ -17,8 +17,6 @@ BOOST_AUTO_TEST_CASE(Test_Greates_Common_Denominator)
 	BOOST_CHECK_EQUAL(GCD(0, 0), 1u);
 }
 
-
-
 /*
   Рациональное число:
 	равно нулю по умолчанию (0/1)
@@ -284,9 +282,13 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 	BOOST_AUTO_TEST_CASE(check_logic_operators)
 	{
 		BOOST_CHECK(CRational(1, 2) == CRational(1, 2));
+		BOOST_CHECK(!(CRational(1, 2) == CRational(1, 7)));
 		BOOST_CHECK(CRational(4, 1) == 4);
+		BOOST_CHECK(!(CRational(4, 1) == 5));
 		BOOST_CHECK(3 == CRational(3, 1));
+		BOOST_CHECK(!(3 == CRational(3, 3)));
 		BOOST_CHECK(CRational(1, 2) != CRational(2, 3));
+		BOOST_CHECK(!(CRational(1, 2) != CRational(2, 4)));
 		BOOST_CHECK(CRational(1, 2) != 7);
 		BOOST_CHECK(3 != CRational(2, 3));
 	}
@@ -309,7 +311,9 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		BOOST_CHECK(CRational(1, 2) >= CRational(1, 3));
 		BOOST_CHECK(!(CRational(1, 2) <= CRational(1, 3)));
 		BOOST_CHECK(CRational(3, 1) > 2);
+		BOOST_CHECK(!(CRational(3, 1) < 2));
 		BOOST_CHECK(CRational(1, 2) < 7);
+		BOOST_CHECK(!(CRational(1, 2) > 7));
 		BOOST_CHECK(3 <= CRational(7, 2));
 		BOOST_CHECK(!(3 >= CRational(8, 2)));
 	}
