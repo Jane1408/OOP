@@ -6,6 +6,8 @@
 CBonnieAndClyde::CBonnieAndClyde(std::string const & input)
 	: m_maxMoney(-1)
 	, m_pairOfBanks({ -1, -1 })
+	, m_firstBank(INT_MAX)
+	, m_lastBank(-1)
 {
 	ReadFromFile(input);
 	FindAnswer();
@@ -29,6 +31,8 @@ void CBonnieAndClyde::ReadFromFile(std::string const & input)
 	{
 		inputFile >> distance;
 		inputFile >> money;
+		m_firstBank = (m_firstBank > distance) ? distance : m_firstBank;
+		m_lastBank = (m_lastBank < distance) ? distance : m_lastBank;
 		m_moneyAndDistance.insert({ money, {distance, i} });
 	}
 	inputFile.close();
@@ -38,18 +42,21 @@ void CBonnieAndClyde::FindAnswer()
 {
 	auto rangeBegin = m_moneyAndDistance.rbegin();
 	auto rangeEnd = m_moneyAndDistance.rend();
-	for (auto it1 = rangeBegin; it1 != rangeEnd; ++it1)
+	if ((m_lastBank - m_firstBank) >= m_minDistance)
 	{
-		for (auto it2 = it1; it2 != rangeEnd; ++it2)
+		for (auto it1 = rangeBegin; it1 != rangeEnd; ++it1)
 		{
-			if (std::abs((it1->second.first) - (it2->second.first)) >= m_minDistance)
+			for (auto it2 = it1; it2 != rangeEnd; ++it2)
 			{
-				if (m_maxMoney < (it1->first + it2->first))
+				if (std::abs((it1->second.first) - (it2->second.first)) >= m_minDistance)
 				{
-					m_pairOfBanks = { it1->second.second , it2->second.second };
-					m_maxMoney = it1->first + it2->first;
-					rangeEnd = it2;
-					break;
+					if (m_maxMoney < (it1->first + it2->first))
+					{
+						m_pairOfBanks = { it1->second.second , it2->second.second };
+						m_maxMoney = it1->first + it2->first;
+						rangeEnd = it2;
+						break;
+					}
 				}
 			}
 		}

@@ -16,5 +16,8 @@ private:
 	int m_maxMoney;
 	int m_numOfBanks;
 	int m_minDistance;
+
+	int m_firstBank;
+	int m_lastBank;
 };
 
