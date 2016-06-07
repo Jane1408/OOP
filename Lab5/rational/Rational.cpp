@@ -80,9 +80,8 @@ CRational operator+ (CRational const& first, CRational const& second)
 
 CRational operator- (CRational const& first, CRational const& second)
 {
-	auto numerator = (first.GetNumerator() * second.GetDenominator()) - (second.GetNumerator() * first.GetDenominator());
-	auto denominator = first.GetDenominator() * second.GetDenominator();
-	return CRational(numerator, denominator);
+	return first + -second;
+
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -101,10 +100,8 @@ CRational CRational::operator+=(CRational const & other)
 //////////////////////////////////////////////////////////////////////////
 CRational CRational::operator-=(CRational const & other)
 {
-	m_numerator = GetNumerator() * other.GetDenominator() - other.GetNumerator() * GetDenominator();
-	m_denominator = other.GetDenominator() * GetDenominator();
-	Normalize();
-	return *this;
+	return *this += -other;
+
 }
 
 
@@ -126,9 +123,8 @@ CRational operator *(CRational const& first, CRational const& second)
 
 CRational operator/ (CRational const& first, CRational const& second) 
 {
-	auto numerator = first.GetNumerator() * second.GetDenominator();
-	auto denominator = first.GetDenominator() * second.GetNumerator();
-	return CRational(numerator, denominator);
+	return first * CRational(second.GetDenominator(), second.GetNumerator());
+
 }
 //////////////////////////////////////////////////////////////////////////
 // TODO: 9. Реализовать оператор *=
@@ -143,9 +139,8 @@ CRational CRational::operator*= (const CRational& other)
 
 CRational CRational::operator*= (int value)
 {
-	m_numerator *= value;
-	Normalize();
-	return *this;
+	return *this * CRational(value, 1);
+
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -153,17 +148,13 @@ CRational CRational::operator*= (int value)
 //////////////////////////////////////////////////////////////////////////
 CRational CRational::operator/= (const CRational& other)
 {
-	m_numerator *= other.GetDenominator();
-	m_denominator *= other.GetNumerator();
-	Normalize();
-	return *this;
+	return *this *= CRational(other.GetDenominator(), other.GetNumerator());
+
 }
 
 CRational CRational::operator/= (int value)
 {
-	m_denominator *= value;
-	Normalize();
-	return *this;
+	return *this *= CRational(1, value);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -176,27 +167,28 @@ bool CRational::operator== (const CRational& other)
 
 bool CRational::operator== (int value)
 {
-	return (GetNumerator() == value && GetDenominator() == 1);
+	return *this == CRational(value, 1);
 }
 
 bool operator== (int  first, const CRational& second)
 {
-	return (first == second.GetNumerator()) && (second.GetDenominator() == 1);
+	return CRational(first, 1) == second;
 }
 
 bool CRational::operator!= (const CRational& other)
 {
-	return (GetNumerator() != other.GetNumerator() || GetDenominator() != other.GetDenominator());
+	return !(*this == other);
+
 }
 
 bool CRational::operator!= (int value)
 {
-	return (GetNumerator() != value || GetDenominator() != 1);
+	return !(*this == CRational(value, 1));
 }
 
 bool operator!= (int first, const CRational& second)
 {
-	return (first != second.GetNumerator()) || (second.GetDenominator() != 1);
+	return !(CRational(first, 1) == second);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -209,27 +201,27 @@ bool const CRational::operator< (const CRational& other)
 
 bool const CRational::operator< (int other)
 {
-	return (m_numerator < (other * m_denominator));
+	return !(*this >= CRational(other));
 }
 
 bool const operator< (int first, const CRational& second)
 {
-	return ((first * second.GetDenominator()) < (second.GetNumerator()));
+	return !(CRational(first) >= second);
 }
 
 bool const CRational::operator> (const CRational& other)
 {
-	return ((m_numerator * other.GetDenominator()) > (other.GetNumerator() * m_denominator));
+	return !(*this <= other);
 }
 
 bool const CRational::operator> (int other)
 {
-	return (m_numerator > (other * m_denominator));
+	return !(*this <= CRational(other));
 }
 
 bool const operator> (int first, const CRational& second)
 {
-	return ((first * second.GetDenominator()) > (second.GetNumerator()));
+	return !(CRational(first, 1) <= CRational(second));
 }
 
 bool const CRational::operator<= (const CRational& other)
@@ -239,27 +231,27 @@ bool const CRational::operator<= (const CRational& other)
 
 bool const CRational::operator<= (int other)
 {
-	return (m_numerator <= (other * m_denominator));
+	return !(*this > CRational(other));
 }
 
 bool const operator<= (int first, const CRational& second)
 {
-	return ((first * second.GetDenominator()) <= (second.GetNumerator()));
+	return !(CRational(first) > second);
 }
 
 bool const CRational::operator>= (const CRational& other)
 {
-	return ((m_numerator * other.GetDenominator()) >= (other.GetNumerator() * m_denominator));
+	return !(*this < CRational(other));
 }
 
 bool const CRational::operator>= (int other)
 {
-	return (m_numerator >= (other * m_denominator));
+	return !(*this < CRational(other));
 }
 
 bool const operator>= (int first, const CRational& second)
-{
-	return ((first * second.GetDenominator()) >= (second.GetNumerator()));
+{ 
+	return !(CRational(first) < second);
 }
 
 //////////////////////////////////////////////////////////////////////////
