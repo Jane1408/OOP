@@ -1,5 +1,9 @@
 #include "stdafx.h"
 #include "..\HTTPURL\HttpUrl.h"
+#include <boost/algorithm/string/replace.hpp>
+#define BOOST_TEST_INCLUDED
+#pragma warning (disable: 4702)
+#include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_SUITE(testing_parser_with_giving_string)
 
@@ -26,6 +30,10 @@ BOOST_AUTO_TEST_CASE(when_doc_is_empty)
 BOOST_AUTO_TEST_CASE(if_protocol_incorrect_then_class_throw_exception)
 {
 	BOOST_REQUIRE_THROW(CHttpUrl("httpt://github.com/document.txt"), CUrlParsingError);
+	BOOST_REQUIRE_THROW(CHttpUrl("http://"), CUrlParsingError);
+	BOOST_REQUIRE_THROW(CHttpUrl("http://github.com:"), CUrlParsingError);
+	BOOST_REQUIRE_THROW(CHttpUrl(""), CUrlParsingError);
+	BOOST_REQUIRE_THROW(CHttpUrl("http"), CUrlParsingError);
 }
 
 BOOST_AUTO_TEST_CASE(if_port_incorrect_then_class_throw_exception)

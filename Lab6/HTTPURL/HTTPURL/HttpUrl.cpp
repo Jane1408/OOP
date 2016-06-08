@@ -5,7 +5,7 @@ const std::map <std::string, Protocol> MapOfProtocol = { {"http", Protocol::HTTP
 	{"https", Protocol::HTTPS}
 };
 
-const std::set<char> Digits = { '0',  '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+//const std::set<char> Digits = { '0',  '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 
 const std::set<char> WrongSymbols = { '\t', ' ', '/', '\\' };
 
@@ -20,7 +20,7 @@ CHttpUrl::CHttpUrl(std::string const & domain, std::string const & document, Pro
 	, m_protocol(protocol)
 	, m_port(port)
 {
-	if (!CheckDomainOnCorrect())
+	if (!IsDomainCorrect())
 	{
 		throw CUrlParsingError("Invalid domain");
 	}
@@ -94,7 +94,7 @@ void CHttpUrl::ParsingDomain(std::string const& url)
 	}
 	auto domain = url.substr(m_pos, pos - m_pos);
 	m_pos = pos;
-	if (!CheckDomainOnCorrect())
+	if (!IsDomainCorrect())
 	{
 		throw CUrlParsingError("Invalid domain");
 	}
@@ -119,8 +119,8 @@ void CHttpUrl::ParsingPort(std::string const& url)
 		}
 		m_pos = pos;
 
-		auto notDigit = [](char const& ch) { return Digits.find(ch) == Digits.end(); };
-		if (port.size() > 3 || std::any_of(port.begin(), port.end(), notDigit))
+		//auto notDigit = [](char const& ch) { return  isdigit(ch); };
+		if (port.size() > 3 || !(std::any_of(port.begin(), port.end(), isdigit)))
 		{
 			throw CUrlParsingError("Port parsing error");
 		}
@@ -128,7 +128,7 @@ void CHttpUrl::ParsingPort(std::string const& url)
 		{
 			SetDefoultPort();
 		}
-		m_port = std::atoi(port.c_str());
+		m_port = static_cast<unsigned short>(std::atoi(port.c_str()));
 	}
 	else if (url[m_pos] == '/')
 	{
@@ -167,7 +167,7 @@ void CHttpUrl::SetDefoultPort()
 	}
 }
 
-bool CHttpUrl::CheckDomainOnCorrect()
+bool CHttpUrl::IsDomainCorrect()
 {
 	auto check = [](char const& arg) { return WrongSymbols.find(arg) != WrongSymbols.end(); };
 	if (std::any_of(m_domain.begin(), m_domain.end(), check))

@@ -52,7 +52,7 @@ private:
 	void ParsingPort(std::string const& url);
 	void ParsingDocument(std::string const& url);
 	void SetDefoultPort();
-	bool CheckDomainOnCorrect();
+	bool IsDomainCorrect();
 
 	unsigned m_pos;
 	Protocol m_protocol;
